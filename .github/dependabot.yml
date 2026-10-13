@@ -1,0 +1,7 @@
+# Keep alint, pinned in pyproject.toml and uv.lock, up to date.
+version: 2
+updates:
+  - package-ecosystem: uv
+    directory: /
+    schedule:
+      interval: weekly

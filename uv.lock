@@ -1,0 +1,30 @@
+version = 1
+revision = 3
+requires-python = ">=3.9"
+
+[[package]]
+name = "alint"
+version = "0.18.2"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f6/3a/c650c46afce0f7d37cee180977a4659a1058097dd61d1ce71ee1529ece94/alint-0.18.2-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:44f30c8f931fb08203a2f99f8e4610242437011455caf2d6ec10d9f415a801f2", size = 6836832, upload-time = "2026-10-13T06:26:55.223Z" },
+    { url = "https://files.pythonhosted.org/packages/39/b7/c8f7d7028436eb8e238e1b82c36193748abaf29577c06369c491fa0a0208/alint-0.18.2-py3-none-macosx_11_0_arm64.whl", hash = "sha256:d29714a28da49274a4a971acb3a9f1a002270206edff3b473e8dbcbd4bf73281", size = 6316275, upload-time = "2026-10-13T06:26:57.495Z" },
+    { url = "https://files.pythonhosted.org/packages/73/61/bc78c6277798d21fe2a99706d8365f0862502d820f7f57396df658fa8b7d/alint-0.18.2-py3-none-manylinux_2_17_aarch64.musllinux_1_2_aarch64.whl", hash = "sha256:03f8e810fbe4e789910050b76832fca723fab22a4ccf2728582a07add0a859c3", size = 6467835, upload-time = "2026-10-13T06:26:59.701Z" },
+    { url = "https://files.pythonhosted.org/packages/36/f8/e315185b0d7fd51895fd30dc72fc45fde5722db0b34070dedc2a579703cf/alint-0.18.2-py3-none-manylinux_2_17_x86_64.musllinux_1_2_x86_64.whl", hash = "sha256:1a8d52a2dbaddbb565980662e6cce76c3ad580af0670b5fe541a9c282eb8945f", size = 7155449, upload-time = "2026-10-13T06:27:01.637Z" },
+    { url = "https://files.pythonhosted.org/packages/91/e9/0ffb3e9e55cf421d53521100b0aedc1dcae1c87f909753101f72820d58ac/alint-0.18.2-py3-none-win_amd64.whl", hash = "sha256:a6d55ca0c9c8aaee05f73d6a7ea515f8e66738bf6ef90f6135e72121321a3f1b", size = 7223234, upload-time = "2026-10-13T06:27:04.087Z" },
+]
+
+[[package]]
+name = "syndai-harness"
+version = "0.1.0"
+source = { virtual = "." }
+
+[package.dev-dependencies]
+dev = [
+    { name = "alint" },
+]
+
+[package.metadata]
+
+[package.metadata.requires-dev]
+dev = [{ name = "alint", specifier = "==0.18.2" }]

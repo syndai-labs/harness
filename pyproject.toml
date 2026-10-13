@@ -1,0 +1,17 @@
+[project]
+name = "syndai-harness"
+version = "0.1.0"
+description = "Shared alint rules for Syndai repositories."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.9"
+dependencies = []
+
+[dependency-groups]
+dev = [
+  "alint==0.18.2",
+]
+
+[tool.uv]
+# Nothing here is built or installed; the project only pins its tools.
+package = false

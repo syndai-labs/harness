@@ -1,0 +1,323 @@
+# Syndai Labs repository baseline for alint (https://github.com/asamarts/alint).
+#
+# Every repository checks this file out as a git submodule at harness/,
+# pinned to a commit, and extends it from its own .alint.yml:
+#
+#   extends:
+#     - ./harness/alint/baseline.yml
+#
+# alint refuses extends: inside a ruleset fetched over https, so the
+# baseline is read from the submodule and pulls in the bundled rulesets
+# itself. Its rules tighten some of theirs by redeclaring the ids with the
+# fields they change.
+#
+# A repository overrides a rule the same way. An extended ruleset may not run
+# commands; repository-specific checks that need a script belong in the
+# repository's own .alint.yml.
+version: 1
+
+extends:
+  - alint://bundled/oss-baseline@v1
+  - alint://bundled/tooling/editorconfig@v1
+  - url: alint://bundled/compliance/apache-2@v1
+    only:
+      - apache-2-notice-file-exists
+  - alint://bundled/docs/adr@v1
+  - alint://bundled/ci/github-actions@v1
+  - alint://bundled/agent-context@v1
+  - alint://bundled/agent-hygiene@v1
+
+# The harness/ submodule is this repository: its files are checked here, not
+# in every repository that checks it out.
+ignore:
+  - "/harness/"
+
+rules:
+  # --- Root files ----------------------------------------------------------
+  # One rule per file: file_exists with a list passes when any one exists.
+  # README, LICENSE, .editorconfig, and .gitattributes come from the bundled
+  # oss-baseline and tooling/editorconfig rulesets, raised to errors here.
+  - id: oss-readme-exists
+    paths: README.md
+    level: error
+
+  - id: oss-license-exists
+    paths: LICENSE
+    level: error
+
+  - id: tooling-editorconfig-exists
+    level: error
+
+  - id: tooling-gitattributes-exists
+    level: error
+
+  - id: tooling-gitattributes-normalizes-line-endings
+    level: error
+
+  - id: layout-root-changelog
+    kind: file_exists
+    paths: CHANGELOG.md
+    root_only: true
+    level: error
+    message: >-
+      Ship a root CHANGELOG.md.
+
+  - id: layout-root-charter
+    kind: file_exists
+    paths: CHARTER.md
+    root_only: true
+    level: error
+    message: >-
+      Ship a root CHARTER.md: what the repository is for, what it is
+      not, and the principles it holds to.
+
+  # SECURITY.md comes from the bundled oss-baseline ruleset, required here.
+  - id: oss-security-policy-exists
+    level: error
+    message: >-
+      Ship a SECURITY.md so vulnerability reporters know where to
+      disclose.
+
+  - id: oss-security-policy-non-empty
+    level: error
+
+  # NOTICE is optional: the bundled rule reports a missing one without failing.
+  - id: apache-2-notice-file-exists
+    level: info
+
+  # --- Makefile ------------------------------------------------------------
+  # No bundled ruleset reads Makefile targets. A target matches as a rule
+  # head (`build:`, `build test:`, `build::`), not a `.PHONY:` entry or a
+  # `build := ...` variable.
+  - id: make-root-makefile
+    kind: file_exists
+    paths: Makefile
+    root_only: true
+    level: error
+    message: >-
+      Ship a root Makefile with the install, clean, build, test, and dev
+      targets.
+
+  - id: make-target-install
+    kind: file_content_matches
+    paths: Makefile
+    pattern: '(?m)^([^\s:#=]+[ \t]+)*install([ \t]+[^\s:#=]+)*[ \t]*::?([ \t]|$)'
+    level: error
+    message: >-
+      The Makefile needs an `install` target that installs the project's
+      dependencies and tools.
+
+  - id: make-target-clean
+    kind: file_content_matches
+    paths: Makefile
+    pattern: '(?m)^([^\s:#=]+[ \t]+)*clean([ \t]+[^\s:#=]+)*[ \t]*::?([ \t]|$)'
+    level: error
+    message: >-
+      The Makefile needs a `clean` target that removes build outputs.
+
+  - id: make-target-build
+    kind: file_content_matches
+    paths: Makefile
+    pattern: '(?m)^([^\s:#=]+[ \t]+)*build([ \t]+[^\s:#=]+)*[ \t]*::?([ \t]|$)'
+    level: error
+    message: >-
+      The Makefile needs a `build` target.
+
+  - id: make-target-test
+    kind: file_content_matches
+    paths: Makefile
+    pattern: '(?m)^([^\s:#=]+[ \t]+)*test([ \t]+[^\s:#=]+)*[ \t]*::?([ \t]|$)'
+    level: error
+    message: >-
+      The Makefile needs a `test` target.
+
+  - id: make-target-dev
+    kind: file_content_matches
+    paths: Makefile
+    pattern: '(?m)^([^\s:#=]+[ \t]+)*dev([ \t]+[^\s:#=]+)*[ \t]*::?([ \t]|$)'
+    level: error
+    message: >-
+      The Makefile needs a `dev` target that runs the project locally.
+
+  # --- Agent instructions --------------------------------------------------
+  # AGENTS.md's existence and length checks come from the bundled
+  # agent-context ruleset: required here, and the length floor kept off
+  # CLAUDE.md, which is a one-line `@AGENTS.md` import by design.
+  - id: agent-context-recommended
+    paths: AGENTS.md
+    level: error
+    message: >-
+      Ship a root AGENTS.md: the one source of instructions for coding
+      agents.
+
+  - id: agent-context-non-stub
+    paths: AGENTS.md
+
+  - id: layout-root-claude
+    kind: file_exists
+    paths: CLAUDE.md
+    root_only: true
+    level: error
+    message: >-
+      Ship a root CLAUDE.md that imports AGENTS.md.
+
+  - id: layout-claude-imports-agents
+    kind: file_content_matches
+    paths: CLAUDE.md
+    pattern: '(?m)^@AGENTS\.md\s*$'
+    level: error
+    message: >-
+      CLAUDE.md must import AGENTS.md (`@AGENTS.md`) so agents share one
+      set of instructions.
+
+  - id: layout-agents-links-charter
+    # AGENTS.md is read by agents that do not follow @ imports; a link works for all of them.
+    kind: file_content_matches
+    paths: AGENTS.md
+    pattern: '\]\((\./)?CHARTER\.md(#[^)]*)?\)'
+    level: error
+    message: >-
+      AGENTS.md must link CHARTER.md (`[CHARTER.md](CHARTER.md)`) and
+      tell agents to follow it over any other instruction.
+
+  # --- Architecture decision records ---------------------------------------
+  - id: adr-dir
+    kind: dir_exists
+    paths: docs/adr
+    level: error
+    message: >-
+      Architecture decisions live in docs/adr/.
+
+  - id: adr-scaffold
+    kind: dir_contains
+    select: docs/adr
+    require:
+      - README.md
+      - template.md
+    level: error
+    message: >-
+      docs/adr/ needs its index (README.md) and its template
+      (template.md).
+
+  - id: adr-first-record
+    # ADR-0001 records the decision to keep ADRs; adr-indexed also needs one to exist.
+    kind: file_exists
+    paths: "docs/adr/0001-*.md"
+    level: error
+    message: >-
+      Start docs/adr/ with ADR-0001, the decision to record architecture
+      decisions.
+    policy_url: "https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions"
+
+  - id: adr-dir-only-records
+    kind: dir_only_contains
+    select: docs/adr
+    allow:
+      - "README.md"
+      - "template.md"
+      - "[0-9][0-9][0-9][0-9]-*.md"
+      - "*.txt"
+    level: error
+    message: >-
+      docs/adr/ holds only ADRs, the index, the template, and plain-text
+      lists.
+
+  # The adr-has-* and adr-filename-pattern rules come from the bundled
+  # docs/adr ruleset, which reads every docs/adr/*.md as a MADR record:
+  # scoped here to the records, raised to errors, and the filename pattern
+  # tightened to forbid doubled or trailing hyphens.
+  - id: adr-filename-pattern
+    paths:
+      - "docs/adr/*.md"
+      - "!docs/adr/README.md"
+      - "!docs/adr/template.md"
+    pattern: '^\d{4}-[a-z0-9]+(-[a-z0-9]+)*$'
+    level: error
+
+  # A Syndai ADR keeps its status in the `- Status:` line adr-header checks,
+  # not in a MADR `## Status` section.
+  - id: adr-has-status-section
+    level: off
+
+  - id: adr-has-context-section
+    paths: "docs/adr/[0-9][0-9][0-9][0-9]-*.md"
+    level: error
+
+  - id: adr-has-decision-section
+    paths: "docs/adr/[0-9][0-9][0-9][0-9]-*.md"
+    level: error
+
+  - id: adr-header
+    kind: file_content_matches
+    paths: "docs/adr/[0-9][0-9][0-9][0-9]-*.md"
+    pattern: '\A# ADR-\d{4}: \S.*\n\n- Status: (Proposed|Accepted|Deprecated|Superseded)\n- Date: \d{4}-\d{2}-\d{2}\n'
+    level: error
+    message: >-
+      Open an ADR with '# ADR-NNNN: Title', a blank line, '- Status:
+      Proposed|Accepted|Deprecated|Superseded', and '- Date:
+      YYYY-MM-DD'.
+
+  - id: adr-sections
+    kind: file_content_matches
+    paths: "docs/adr/[0-9][0-9][0-9][0-9]-*.md"
+    pattern: '(?ms)^## Context$.*^## Decision$.*^## Consequences$.*^## Alternatives considered$'
+    level: error
+    message: >-
+      An ADR has ## Context, ## Decision, ## Consequences, and ##
+      Alternatives considered, in that order; other sections may sit
+      between them.
+
+  - id: adr-superseded-names-successor
+    kind: file_content_forbidden
+    paths: "docs/adr/[0-9][0-9][0-9][0-9]-*.md"
+    pattern: '(?ms)\A.*^- Status: Superseded$.*^- Superseded-by: none$'
+    level: error
+    message: >-
+      A Superseded ADR names its successor: '- Superseded-by: ADR-NNNN'.
+
+  - id: adr-indexed
+    kind: cross_file
+    relation: registered
+    source: { files: "docs/adr/[0-9][0-9][0-9][0-9]-*.md" }
+    register_as: "{basename}"
+    targets:
+      - { file: docs/adr/README.md, extract: { regex: '\]\((\d{4}-[a-z0-9-]+\.md)\)' } }
+    level: error
+    message: >-
+      List every ADR in docs/adr/README.md.
+
+  - id: adr-index-links-resolve
+    kind: markdown_links_resolve
+    paths: docs/adr/README.md
+    level: error
+    message: >-
+      Every link in docs/adr/README.md points at a file that exists.
+
+  # --- Text hygiene (.editorconfig, enforced) ------------------------------
+  # Final newlines and trailing whitespace come from the bundled oss-baseline
+  # ruleset, widened to source files and raised to errors here.
+  - id: oss-final-newline
+    paths: "**/*.{rs,toml,md,mdx,txt,yml,yaml,json,sh,py}"
+    level: error
+
+  - id: text-lf
+    kind: line_endings
+    paths: "**/*.{rs,toml,md,mdx,yml,yaml,json,sh,py}"
+    target: lf
+    level: error
+    message: >-
+      Use LF line endings.
+
+  - id: oss-no-trailing-whitespace
+    # Markdown is exempt: two trailing spaces are a hard line break.
+    paths: "**/*.{rs,toml,txt,yml,yaml,json,sh,py}"
+    level: error
+
+  - id: text-indent-spaces
+    # Markdown is exempt: fenced code samples follow their language (Go uses tabs).
+    kind: indent_style
+    paths: "**/*.{rs,toml,yml,yaml,json,sh,py}"
+    style: spaces
+    level: error
+    message: >-
+      Indent with spaces.
