@@ -1,0 +1,4 @@
+# The uv environment holding alint.
+/.venv/
+
+.DS_Store

@@ -1,0 +1,19 @@
+# This repository is checked with alint's bundled rulesets, not the baseline it
+# publishes: it keeps no CHARTER.md or ADRs.
+version: 1
+
+extends:
+  - alint://bundled/oss-baseline@v1
+  - alint://bundled/tooling/editorconfig@v1
+  - url: alint://bundled/compliance/apache-2@v1
+    only:
+      - apache-2-notice-file-exists
+  - alint://bundled/ci/github-actions@v1
+  - alint://bundled/agent-context@v1
+  - alint://bundled/agent-hygiene@v1
+
+rules:
+  # CLAUDE.md is a one-line `@AGENTS.md` import by design.
+  - id: agent-context-non-stub
+    paths:
+      - AGENTS.md
