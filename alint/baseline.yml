@@ -1,36 +1,22 @@
 # Syndai Labs repository baseline for alint (https://github.com/asamarts/alint).
 #
-# Every repository checks this file out as a git submodule at harness/,
-# pinned to a commit, and extends it from its own .alint.yml:
+# Every repository extends this file by its raw URL, pinned to a commit and
+# to its SHA-256, after the bundled rulesets it tightens (alint/example.yml):
 #
 #   extends:
-#     - ./harness/alint/baseline.yml
+#     - alint://bundled/oss-baseline@v1
+#     - ...
+#     - https://raw.githubusercontent.com/syndai-labs/harness/<commit>/alint/baseline.yml#sha256-<hex>
 #
-# alint refuses extends: inside a ruleset fetched over https, so the
-# baseline is read from the submodule and pulls in the bundled rulesets
-# itself. Its rules tighten some of theirs by redeclaring the ids with the
-# fields they change.
+# alint refuses extends: inside a ruleset fetched over https, so this file
+# extends nothing: each repository lists the bundled rulesets itself, in the
+# order alint/example.yml gives, and this file's rules tighten some of theirs
+# by redeclaring the ids with the fields they change.
 #
-# A repository overrides a rule the same way. An extended ruleset may not run
+# A repository overrides a rule the same way. A fetched ruleset may not run
 # commands; repository-specific checks that need a script belong in the
 # repository's own .alint.yml.
 version: 1
-
-extends:
-  - alint://bundled/oss-baseline@v1
-  - alint://bundled/tooling/editorconfig@v1
-  - url: alint://bundled/compliance/apache-2@v1
-    only:
-      - apache-2-notice-file-exists
-  - alint://bundled/docs/adr@v1
-  - alint://bundled/ci/github-actions@v1
-  - alint://bundled/agent-context@v1
-  - alint://bundled/agent-hygiene@v1
-
-# The harness/ submodule is this repository: its files are checked here, not
-# in every repository that checks it out.
-ignore:
-  - "/harness/"
 
 rules:
   # --- Root files ----------------------------------------------------------

@@ -14,29 +14,39 @@ Shared repository rules for Syndai Labs, checked by [alint](https://github.com/a
 
 A root `NOTICE` is optional: alint reports a missing one as `info`, which does not fail the check.
 
-`alint/baseline.yml` extends alint's bundled `oss-baseline`, `tooling/editorconfig`, `compliance/apache-2` (its NOTICE rule only), `docs/adr`, `ci/github-actions`, `agent-context`, and `agent-hygiene` rulesets. It raises the bundled README, LICENSE, SECURITY.md, AGENTS.md, `.editorconfig`, `.gitattributes`, final-newline, trailing-whitespace, ADR filename, and ADR Context and Decision rules to errors and narrows their paths. It turns off `adr-has-status-section`, since a Syndai ADR keeps its status in a `- Status:` line, not a `## Status` section, and keeps the agent-context 10-line floor off `CLAUDE.md`, a one-line `@AGENTS.md` import. The other bundled rules keep their own levels: merge-conflict markers and bidi controls are errors, the GitHub Actions and agent-hygiene checks are warnings, and the Dependabot, CODEOWNERS, code-of-conduct, `.gitignore`, agent-file size, and stale-path nudges are `info`. CHARTER.md, CHANGELOG.md, the Makefile, the CLAUDE.md import, the AGENTS.md link to CHARTER.md, the ADR header, sections, and index, LF line endings, and space indentation have no bundled equivalent.
+`alint/baseline.yml` tightens alint's bundled `oss-baseline`, `tooling/editorconfig`, `compliance/apache-2` (its NOTICE rule only), `docs/adr`, `ci/github-actions`, `agent-context`, and `agent-hygiene` rulesets. It raises the bundled README, LICENSE, SECURITY.md, AGENTS.md, `.editorconfig`, `.gitattributes`, final-newline, trailing-whitespace, ADR filename, and ADR Context and Decision rules to errors and narrows their paths. It turns off `adr-has-status-section`, since a Syndai ADR keeps its status in a `- Status:` line, not a `## Status` section, and keeps the agent-context 10-line floor off `CLAUDE.md`, a one-line `@AGENTS.md` import. The other bundled rules keep their own levels: merge-conflict markers and bidi controls are errors, the GitHub Actions and agent-hygiene checks are warnings, and the Dependabot, CODEOWNERS, code-of-conduct, `.gitignore`, agent-file size, and stale-path nudges are `info`. CHARTER.md, CHANGELOG.md, the Makefile, the CLAUDE.md import, the AGENTS.md link to CHARTER.md, the ADR header, sections, and index, LF line endings, and space indentation have no bundled equivalent.
 
 ## Use
 
-Add this repository as a git submodule at `harness/`, which pins it to a commit:
-
-```bash
-git submodule add https://github.com/syndai-labs/harness harness
-```
-
-Extend the baseline from the repository's `.alint.yml`:
+Extend the baseline from the repository's `.alint.yml` by its raw URL, pinned to a commit and to the file's SHA-256, after the bundled rulesets it tightens. Copy the block from [alint/example.yml](alint/example.yml):
 
 ```yaml
 version: 1
 extends:
-  - ./harness/alint/baseline.yml
+  - alint://bundled/oss-baseline@v1
+  - alint://bundled/tooling/editorconfig@v1
+  - url: alint://bundled/compliance/apache-2@v1
+    only:
+      - apache-2-notice-file-exists
+  - alint://bundled/docs/adr@v1
+  - alint://bundled/ci/github-actions@v1
+  - alint://bundled/agent-context@v1
+  - alint://bundled/agent-hygiene@v1
+  - https://raw.githubusercontent.com/syndai-labs/harness/<commit>/alint/baseline.yml#sha256-<hex>
 ```
 
-alint refuses `extends:` inside a ruleset fetched over `https://`, so the baseline is read from the submodule, where it can extend the bundled rulesets itself. The baseline ignores `harness/`, so the submodule's own files are not checked as the repository's. CI checks out submodules before running alint, for example with `submodules: true` on `actions/checkout`.
-
-Install alint 0.18.2 or later from PyPI with any of:
+Get the digest with:
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/syndai-labs/harness/<commit>/alint/baseline.yml | shasum -a 256
+```
+
+alint caches the file by its digest and refuses it if the bytes differ. It also refuses `extends:` inside a ruleset fetched over `https://`, so the baseline extends nothing and each repository lists the bundled rulesets itself; they must come before the baseline, whose rules redeclare some of their ids.
+
+Install alint 0.18.2 or later with cargo-binstall, which downloads the release binary, or from PyPI:
+
+```bash
+cargo binstall alint
 uvx alint check
 pipx run alint check
 uv tool install alint
@@ -72,9 +82,4 @@ Set `ALINT` to use another alint binary, for example `make test ALINT=alint`.
 
 ## Change a rule
 
-Edit `alint/baseline.yml`, then run `make test`. Repositories move to the new rules by checking out the new commit in `harness/` and committing the submodule update:
-
-```bash
-git -C harness fetch && git -C harness checkout <commit>
-git add harness
-```
+Edit `alint/baseline.yml`, then run `make test`. If the change extends another bundled ruleset, add it to `alint/example.yml` and to the block above. Repositories move to the new rules by updating the commit and the digest in their URL, and any bundled rulesets the change added.
