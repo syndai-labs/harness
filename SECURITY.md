@@ -2,7 +2,7 @@
 
 ## Reporting a vulnerability
 
-Report a vulnerability privately through GitHub's private vulnerability reporting on [syndai-labs/harness](https://github.com/syndai-labs/harness/security/advisories/new). Do not open a public issue.
+Report a vulnerability privately through GitHub's private vulnerability reporting on [syndai-labs/harness](https://github.com/syndai-labs/harness/security/advisories/new). If you cannot use GitHub, email [security@syndai.com](mailto:security@syndai.com). Do not open a public issue.
 
 Include the commit of `alint/baseline.yml` you use, what a rule lets through or blocks that it should not, and a minimal repository that shows it.
 
