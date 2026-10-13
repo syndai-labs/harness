@@ -12,4 +12,4 @@ A weakness here is a rule that lets a repository pass while missing what the bas
 
 ## Supported versions
 
-Only the latest commit on `main` is supported. Repositories pin a commit through the submodule, so a fix reaches them when they move it.
+Only the latest commit on `main` is supported. Repositories pin a commit and its digest in their `.alint.yml`, so a fix reaches them when they move the pin.

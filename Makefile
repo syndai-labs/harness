@@ -14,9 +14,9 @@ install:
 clean:
 	rm -rf .venv
 
-# Check that alint/baseline.yml loads.
+# Check that alint/baseline.yml loads after the bundled rulesets it tightens.
 build: install
-	$(ALINT) validate-config -c alint/baseline.yml
+	$(ALINT) validate-config -c alint/example.yml
 
 # Check this repository.
 test: build

@@ -1,0 +1,18 @@
+# The extends: block every repository's .alint.yml starts with. `make build`
+# checks that it loads; a repository replaces ./baseline.yml with the raw URL
+# of alint/baseline.yml at a commit, and its SHA-256:
+#
+#   https://raw.githubusercontent.com/syndai-labs/harness/<commit>/alint/baseline.yml#sha256-<hex>
+version: 1
+
+extends:
+  - alint://bundled/oss-baseline@v1
+  - alint://bundled/tooling/editorconfig@v1
+  - url: alint://bundled/compliance/apache-2@v1
+    only:
+      - apache-2-notice-file-exists
+  - alint://bundled/docs/adr@v1
+  - alint://bundled/ci/github-actions@v1
+  - alint://bundled/agent-context@v1
+  - alint://bundled/agent-hygiene@v1
+  - ./baseline.yml
