@@ -4,14 +4,14 @@ requires-python = ">=3.9"
 
 [[package]]
 name = "alint"
-version = "0.18.2"
+version = "0.18.4"
 source = { registry = "https://pypi.org/simple" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f6/3a/c650c46afce0f7d37cee180977a4659a1058097dd61d1ce71ee1529ece94/alint-0.18.2-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:44f30c8f931fb08203a2f99f8e4610242437011455caf2d6ec10d9f415a801f2", size = 6836832, upload-time = "2026-10-13T06:26:55.223Z" },
-    { url = "https://files.pythonhosted.org/packages/39/b7/c8f7d7028436eb8e238e1b82c36193748abaf29577c06369c491fa0a0208/alint-0.18.2-py3-none-macosx_11_0_arm64.whl", hash = "sha256:d29714a28da49274a4a971acb3a9f1a002270206edff3b473e8dbcbd4bf73281", size = 6316275, upload-time = "2026-10-13T06:26:57.495Z" },
-    { url = "https://files.pythonhosted.org/packages/73/61/bc78c6277798d21fe2a99706d8365f0862502d820f7f57396df658fa8b7d/alint-0.18.2-py3-none-manylinux_2_17_aarch64.musllinux_1_2_aarch64.whl", hash = "sha256:03f8e810fbe4e789910050b76832fca723fab22a4ccf2728582a07add0a859c3", size = 6467835, upload-time = "2026-10-13T06:26:59.701Z" },
-    { url = "https://files.pythonhosted.org/packages/36/f8/e315185b0d7fd51895fd30dc72fc45fde5722db0b34070dedc2a579703cf/alint-0.18.2-py3-none-manylinux_2_17_x86_64.musllinux_1_2_x86_64.whl", hash = "sha256:1a8d52a2dbaddbb565980662e6cce76c3ad580af0670b5fe541a9c282eb8945f", size = 7155449, upload-time = "2026-10-13T06:27:01.637Z" },
-    { url = "https://files.pythonhosted.org/packages/91/e9/0ffb3e9e55cf421d53521100b0aedc1dcae1c87f909753101f72820d58ac/alint-0.18.2-py3-none-win_amd64.whl", hash = "sha256:a6d55ca0c9c8aaee05f73d6a7ea515f8e66738bf6ef90f6135e72121321a3f1b", size = 7223234, upload-time = "2026-10-13T06:27:04.087Z" },
+    { url = "https://files.pythonhosted.org/packages/2f/7b/078c97e7f88a31f66953ee7cfad52445206fba76312c1d4559997e924840/alint-0.18.4-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:5883eac90373475006b95e4c0bca745a58884d0e598b6896a83b8fd01431cffd", size = 6849465, upload-time = "2026-10-15T18:02:59.933Z" },
+    { url = "https://files.pythonhosted.org/packages/c4/77/05d6099d17c154166070f01c286af5b84936342c271b6205f5078f6898cf/alint-0.18.4-py3-none-macosx_11_0_arm64.whl", hash = "sha256:db370f9c44bef41a584ea0ffdb9f2586ff28e0c1b42bc0be39e7be82ba7b5c23", size = 6331842, upload-time = "2026-10-15T18:03:01.908Z" },
+    { url = "https://files.pythonhosted.org/packages/5c/4f/b94aee04d5f111b1a0cf1ea85201c14c7e66377333b8033be165d585e1e0/alint-0.18.4-py3-none-manylinux_2_17_aarch64.musllinux_1_2_aarch64.whl", hash = "sha256:65bb9946f7fb8c00bd74dbfa5c82fb413510c310b98ade1e1cdfdbad63deb0b0", size = 6480381, upload-time = "2026-10-15T18:03:03.795Z" },
+    { url = "https://files.pythonhosted.org/packages/21/96/2d902954389035b4ca01ceb65ad804c8943380de975e7224ce67aaebdcde/alint-0.18.4-py3-none-manylinux_2_17_x86_64.musllinux_1_2_x86_64.whl", hash = "sha256:10844c10fca412155a705b9efbb3966114d6b58054194f070d3120750a4d2f1b", size = 7175838, upload-time = "2026-10-15T18:03:06.21Z" },
+    { url = "https://files.pythonhosted.org/packages/ce/a2/a24fe326f14233b90f49b476cae5fc4e185a500f51425718c97aec95753a/alint-0.18.4-py3-none-win_amd64.whl", hash = "sha256:4c4cd834b932cf7abb856897d013e4dccc40bf8451ee1e91627e708c8ec2f544", size = 7237449, upload-time = "2026-10-15T18:03:08.162Z" },
 ]
 
 [[package]]
@@ -27,4 +27,4 @@ dev = [
 [package.metadata]
 
 [package.metadata.requires-dev]
-dev = [{ name = "alint", specifier = "==0.18.2" }]
+dev = [{ name = "alint", specifier = "==0.18.4" }]
