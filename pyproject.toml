@@ -9,7 +9,7 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-  "alint==0.18.2",
+  "alint==0.20.1",
 ]
 
 [tool.uv]
