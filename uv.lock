@@ -1,17 +1,17 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.9"
 
 [[package]]
 name = "alint"
-version = "0.18.2"
+version = "0.21.2"
 source = { registry = "https://pypi.org/simple" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f6/3a/c650c46afce0f7d37cee180977a4659a1058097dd61d1ce71ee1529ece94/alint-0.18.2-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:44f30c8f931fb08203a2f99f8e4610242437011455caf2d6ec10d9f415a801f2", size = 6836832, upload-time = "2026-10-13T06:26:55.223Z" },
-    { url = "https://files.pythonhosted.org/packages/39/b7/c8f7d7028436eb8e238e1b82c36193748abaf29577c06369c491fa0a0208/alint-0.18.2-py3-none-macosx_11_0_arm64.whl", hash = "sha256:d29714a28da49274a4a971acb3a9f1a002270206edff3b473e8dbcbd4bf73281", size = 6316275, upload-time = "2026-10-13T06:26:57.495Z" },
-    { url = "https://files.pythonhosted.org/packages/73/61/bc78c6277798d21fe2a99706d8365f0862502d820f7f57396df658fa8b7d/alint-0.18.2-py3-none-manylinux_2_17_aarch64.musllinux_1_2_aarch64.whl", hash = "sha256:03f8e810fbe4e789910050b76832fca723fab22a4ccf2728582a07add0a859c3", size = 6467835, upload-time = "2026-10-13T06:26:59.701Z" },
-    { url = "https://files.pythonhosted.org/packages/36/f8/e315185b0d7fd51895fd30dc72fc45fde5722db0b34070dedc2a579703cf/alint-0.18.2-py3-none-manylinux_2_17_x86_64.musllinux_1_2_x86_64.whl", hash = "sha256:1a8d52a2dbaddbb565980662e6cce76c3ad580af0670b5fe541a9c282eb8945f", size = 7155449, upload-time = "2026-10-13T06:27:01.637Z" },
-    { url = "https://files.pythonhosted.org/packages/91/e9/0ffb3e9e55cf421d53521100b0aedc1dcae1c87f909753101f72820d58ac/alint-0.18.2-py3-none-win_amd64.whl", hash = "sha256:a6d55ca0c9c8aaee05f73d6a7ea515f8e66738bf6ef90f6135e72121321a3f1b", size = 7223234, upload-time = "2026-10-13T06:27:04.087Z" },
+    { url = "https://files.pythonhosted.org/packages/58/e4/8454daef27099ad7a2c9027a7ac03c54569d6990b9687af4a3526e4a6219/alint-0.21.2-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:469a1cfb6b5d1f3bc592db017c9df82655efda177b908434b52e98bf696c387d", size = 8349231, upload-time = "2026-11-06T22:30:45.938Z" },
+    { url = "https://files.pythonhosted.org/packages/ac/16/61f94c6cb4c34b6b393b6c44b0cebcf14b03ed4d5ad1acb29f055327c0d5/alint-0.21.2-py3-none-macosx_11_0_arm64.whl", hash = "sha256:01d793b05f5145a92a6e34da4b080c226ac0ce8ab4f40b137b342a8473ab2f12", size = 7692064, upload-time = "2026-11-06T22:30:48.117Z" },
+    { url = "https://files.pythonhosted.org/packages/09/aa/71dbf57126011144540bf42c1190ba7401115c696fc0431aa4eae31b238b/alint-0.21.2-py3-none-manylinux_2_17_aarch64.musllinux_1_2_aarch64.whl", hash = "sha256:625268729895a8f9b770676e57be8e56464342e4f6056ffe84eee4f3d4775f47", size = 7829476, upload-time = "2026-11-06T22:30:49.934Z" },
+    { url = "https://files.pythonhosted.org/packages/1e/02/91ac15b4d1e30a54806d13c550a069b84c690d999c0444db7b18c2c34ad3/alint-0.21.2-py3-none-manylinux_2_17_x86_64.musllinux_1_2_x86_64.whl", hash = "sha256:bce579a3d31cb8aa530ae8bed1cf1df9ca040edb7e9c82e856a115654ee35794", size = 8714884, upload-time = "2026-11-06T22:30:51.893Z" },
+    { url = "https://files.pythonhosted.org/packages/99/9d/b0686ef1f36a6efdd73d3122b1365b0d56db524bc91157730cd10ee9e529/alint-0.21.2-py3-none-win_amd64.whl", hash = "sha256:5b90fd82adcaf3d085cb576452d62786c668680e11cc0bffdc770370697bd334", size = 8853109, upload-time = "2026-11-06T22:30:54.166Z" },
 ]
 
 [[package]]
@@ -27,4 +27,4 @@ dev = [
 [package.metadata]
 
 [package.metadata.requires-dev]
-dev = [{ name = "alint", specifier = "==0.18.2" }]
+dev = [{ name = "alint", specifier = "==0.21.2" }]
